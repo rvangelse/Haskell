@@ -71,9 +71,6 @@ main = do
   printAB arbolNegado
   putStrLn ""
 
- 
-
-
 
 
 
