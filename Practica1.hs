@@ -44,8 +44,8 @@ elem x = foldr (\y rec -> (y==x) || rec) False
 (++) xs ys = foldr (\x rec-> x:rec) ys xs
 
 mapFoldr :: (a->b) -> [a] -> [b]
-mapFoldr f  = foldr (\x rec-> (f x):rec) [] 
+mapFoldr f  = foldr (\x rec-> f x:rec) [] 
 
 filterFoldr :: (a->Bool) -> [a] -> [a]
-filterFoldr p = foldr (\x rec -> if (p x) then x:rec else rec) []
+filterFoldr p = foldr (\x rec -> if p x then x:rec else rec) []
 
