@@ -21,9 +21,8 @@ dosVeces = \f -> f . f
 flipAll :: [(a -> b -> c)] -> [(b -> a -> c)]
 flipAll = map flip 
 
--- La función flipRaro no tiene un tipo válido porque 
--- estás intentando aplicar una función que invierte argumentos a otra función 
--- que también invierte argumentos, creando un ciclo de tipos que no encajan entre sí.
+flipRaro :: b -> (a-> b -> c) -> a -> c
+flipRaro = flip flip
 
 curry ::((a,b) -> c) -> (a-> (b -> c))
 curry f a b = f (a, b)
@@ -31,4 +30,22 @@ curry f a b = f (a, b)
 uncurry :: (a -> (b -> c)) -> ((a, b) -> c)
 uncurry f (a, b) = f a b
 
+-- CurryN no se puede definir, puedes definir Curry2, Curry3, Curry4.
+-- Pero, no CurryN, ya que Haskell necesita saber exactamente el numero de argumentos
+-- al tipar, debe ser ser estatico, no variable.
+
+sum :: Num a => [a] -> a
+sum = foldr (+) 0
+
+elem :: Eq a => a -> [a] -> Bool
+elem x = foldr (\y rec -> (y==x) || rec) False
+
+(++) :: [a] -> [a] -> [a]
+(++) xs ys = foldr (\x rec-> x:rec) ys xs
+
+mapFoldr :: (a->b) -> [a] -> [b]
+mapFoldr f  = foldr (\x rec-> (f x):rec) [] 
+
+filterFoldr :: (a->Bool) -> [a] -> [a]
+filterFoldr p = foldr (\x rec -> if (p x) then x:rec else rec) []
 
