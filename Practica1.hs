@@ -54,3 +54,9 @@ mejorSegun p = foldr1 (\x rec -> if p x rec then x else rec)
 
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales = tail . foldl (\acc x -> acc Prelude.++ [last acc + x]) [0]
+
+sumaAlt :: Num a => [a] -> a 
+sumaAlt =  foldr (\x rec -> x - rec) 0
+
+sumaAltInversa :: Num a => [a] -> a
+sumaAltInversa = foldl (\acc x -> x - acc) 0
