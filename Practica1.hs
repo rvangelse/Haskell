@@ -49,3 +49,8 @@ mapFoldr f  = foldr (\x rec-> f x:rec) []
 filterFoldr :: (a->Bool) -> [a] -> [a]
 filterFoldr p = foldr (\x rec -> if p x then x:rec else rec) []
 
+mejorSegun :: (a -> a -> Bool) -> [a] -> a
+mejorSegun p = foldr1 (\x rec -> if p x rec then x else rec)
+
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales = tail . foldl (\acc x -> acc Prelude.++ [last acc + x]) [0]
