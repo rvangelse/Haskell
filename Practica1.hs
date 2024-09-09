@@ -1,4 +1,4 @@
-import Text.XHtml (base)
+
 max2 :: Float -> Float -> Float
 max2 x y | x >= y = x
          | otherwise = y
@@ -40,8 +40,8 @@ sum = foldr (+) 0
 elem :: Eq a => a -> [a] -> Bool
 elem x = foldr (\y rec -> (y==x) || rec) False
 
-(++) :: [a] -> [a] -> [a]
-(++) xs ys = foldr (\x rec-> x:rec) ys xs
+masmas:: [a] -> [a] -> [a]
+masmas xs ys = foldr (\x rec-> x:rec) ys xs
 
 mapFoldr :: (a->b) -> [a] -> [b]
 mapFoldr f  = foldr (\x rec-> f x:rec) [] 
@@ -53,10 +53,20 @@ mejorSegun :: (a -> a -> Bool) -> [a] -> a
 mejorSegun p = foldr1 (\x rec -> if p x rec then x else rec)
 
 sumasParciales :: Num a => [a] -> [a]
-sumasParciales = tail . foldl (\acc x -> acc Prelude.++ [last acc + x]) [0]
+sumasParciales  = foldl (\rec x -> (if null rec then x :rec else rec ++ [last rec + x])) [] 
 
 sumaAlt :: Num a => [a] -> a 
 sumaAlt =  foldr (\x rec -> x - rec) 0
 
 sumaAltInversa :: Num a => [a] -> a
 sumaAltInversa = foldl (\acc x -> x - acc) 0
+
+entrelazar :: [a] -> [a] -> [a]
+entrelazar = foldr (\x rec ys -> if null ys then x : rec [] else x : head ys : rec (tail ys)) id
+
+recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
+recr _ z [] = z
+recr f z (x : xs) = f x xs (recr f z xs)
+
+sacarUna :: Eq a => a -> [a] -> [a]
+sacarUna y = recr (\x xs rec -> if x == y then xs else y: rec) []
