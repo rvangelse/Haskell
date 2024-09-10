@@ -70,3 +70,6 @@ recr f z (x : xs) = f x xs (recr f z xs)
 
 sacarUna :: Eq a => a -> [a] -> [a]
 sacarUna y = recr (\x xs rec -> if x == y then xs else y: rec) []
+--No podemos usar foldr porque, necesitamos una recursion primitiva que nos permita acceder a mas informacion de las subestructuras recursivas.
+insertarOrdenado :: Ord a => a -> [a] -> [a]
+insertarOrdenado y = recr (\x xs rec  ->if y <= x then y:x:xs else x:rec) [y]
