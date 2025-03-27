@@ -1,21 +1,3 @@
-import GHC.Num.BigNat (bigNatAdd)
-
-max2 :: Float -> Float -> Float
-max2 x y | x >= y = x
-         | otherwise = y
-
-normaVectorial :: Float -> Float -> Float
-normaVectorial x y = sqrt (x^2 + y^2)
-
-subtract :: Float -> Float -> Float
-subtract = flip (-)
-
-predecesor :: Float -> Float 
-predecesor  = Main.subtract 1 
-
-evaluarEnCero :: (Float -> b) -> b
-evaluarEnCero = \f -> f 0
-
 dosVeces :: (a -> a) -> a -> a
 dosVeces = \f -> f . f
 
