@@ -96,3 +96,19 @@ filterFoldr :: (a -> Bool) -> [a] -> [a]
 filterFoldr p = foldr(\x rec -> if p x then x:rec else rec) []
 ```
 ### II.
+
+OJO: `foldr1` es un tipo especial de foldr, usa el  `último elemento` de la lista como `caso base`. No se puede aplicar sobre estructuras vacías.
+
+```haskell
+mejorSegun :: (a -> a -> Bool) -> [a] -> a
+mejorSegun p = foldr1 (\x rec -> if p x rec then x else rec)
+
+--Aplicación: 
+minimo :: [a] -> a
+minimo = mejorSegun (<)
+```
+### III.
+
+
+
+
