@@ -1,4 +1,4 @@
-# Práctica 0 
+# Práctica 0: Pre-Práctica de Programación Funcional 
 
 ## 1. 
 

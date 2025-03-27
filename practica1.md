@@ -36,3 +36,28 @@ predecesor = subtract 1
 evaluarEnCero :: (Float -> b) -> b
 evaluarEnCero = \f -> f 0 
 ```
+```haskell
+--OJO: Le paso una función y un parámetro del tipo "a"
+dosVeces :: (a -> a) -> a -> a
+dosVeces = \f -> f . f
+```
+```haskell
+-- OJO: map :: (a -> b) -> [a] -> [b]
+--      flip :: (a -> b -> c) -> (b -> a -> c) 
+flipAll :: [(a -> b -> c)] -> [b -> a -> c]
+flipAll = map flip
+```
+```haskell
+--OJO:  flip :: (a -> b -> c) -> (b -> a -> c)
+flipRaro :: b -> (a -> b -> c) -> a -> c
+flipRaro = flip flip
+```
+## 2. 
+```haskell
+curry :: ((a, b) -> c) -> a -> b -> c
+curry f a b = f (a, b) --curry f = \a b -> f(a, b)
+
+uncurry :: (a -> b -> c) -> (a, b) -> c
+uncurry f (a, b) = f a b 
+```
+OJO: `curryN`  no se puede definir, puedes definir curry2, curry3, curry4, etc. Pero, no curryN, ya que Haskell necesita saber `exactamente` el número de argumentos al tipar, debe ser estático, `no variable`.
