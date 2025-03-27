@@ -21,7 +21,7 @@ normaVectorial x y = sqrt(x^2 + y^2)
 ```
 ```haskell
 -- OJO: flip :: (a -> b -> c) -> b -> a -> c Pide una función
---     (-) :: Float -> Float -> Float Le di la función (-)
+--      (-) :: Float -> Float -> Float Le di la función (-)
 subtract :: Float -> Float -> Float
 subtract = flip(-)
 ```
