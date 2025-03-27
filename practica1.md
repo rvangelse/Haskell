@@ -66,27 +66,32 @@ OJO: `curryN`  no se puede definir, puedes definir curry2, curry3, curry4, etc. 
 ### I.
 
 ```haskell
--- La idea es que se vayan sumando uno a los elementos desde la cabeza de la lista y que cuando ya no queden elementos se sume 0 para cortar la recursión
+-- La idea es que se vayan sumando uno a los elementos desde la cabeza de la lista 
+-- Y que cuando ya no queden elementos se sume 0 para cortar la recursión
 sum :: Num a => [a] -> a
 sum = foldr (+) 0
 ```
 ```haskell
--- La idea es ir comparando uno a uno los elementos de (y:ys) con x e ir construyendo una cadena de ORs, si en algun momento se genera un True, el resultado final será True 
+-- La idea es ir comparando uno a uno los elementos de (y:ys) con x e ir construyendo una cadena de ORs
+-- Si en algun momento se genera un True, el resultado final será True 
 elem :: Eq a => a -> [a] -> Bool
 elem x = foldr(\y rec -> (y == x) || rec) False
 ```
 ```haskell
--- La idea es ir agregando los elementos de xs uno a uno y cuando ya no queden elementos de xs, agregamos todo a ys. 
+-- La idea es ir agregando los elementos de xs uno a uno 
+-- Y cuando ya no queden elementos de xs, agregamos todo a ys. 
 (++) :: [a] -> [a] -> [a]
 (++) xs ys = foldr (\x rec -> x: rec) ys xs
 ```
 ```haskell
--- La idea es ir aplicandole "f" a cada uno de los elementos de xs, cuando no queden elementos, le agregamos todos los "x modificados" a la []
+-- La idea es ir aplicandole "f" a cada uno de los elementos de xs
+-- Cuando no queden elementos, le agregamos todos los "x modificados" a la []
 mapFoldr :: (a -> b) -> [a] -> [b]
 mapFoldr f = foldr (\x rec -> f x : rec) []
 ```
 ```haskell
--- La idea es ir validando cada uno de los elementos de xs usando el predicado "p", si es True lo agrego, si no sigo con el siguiente elemento
+-- La idea es ir validando cada uno de los elementos de xs usando el predicado "p"
+-- Si es True lo agrego, si no sigo con el siguiente elemento
 filterFoldr :: (a -> Bool) -> [a] -> [a]
 filterFoldr p = foldr(\x rec -> if p x then x:rec else rec) []
 ```
