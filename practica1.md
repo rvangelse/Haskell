@@ -55,9 +55,39 @@ flipRaro = flip flip
 ## 2. 
 ```haskell
 curry :: ((a, b) -> c) -> a -> b -> c
-curry f a b = f (a, b) --curry f = \a b -> f(a, b)
+curry f a b = f (a, b) --curry f = \a b -> f(a, b) (Versión usando notación "Lambda")
 
 uncurry :: (a -> b -> c) -> (a, b) -> c
 uncurry f (a, b) = f a b 
 ```
 OJO: `curryN`  no se puede definir, puedes definir curry2, curry3, curry4, etc. Pero, no curryN, ya que Haskell necesita saber `exactamente` el número de argumentos al tipar, debe ser estático, `no variable`.
+
+## 3. 
+### I.
+
+```haskell
+-- La idea es que se vayan sumando uno a los elementos desde la cabeza de la lista y que cuando ya no queden elementos se sume 0 para cortar la recursión
+sum :: Num a => [a] -> a
+sum = foldr (+) 0
+```
+```haskell
+-- La idea es ir comparando uno a uno los elementos de (y:ys) con x e ir construyendo una cadena de ORs, si en algun momento se genera un True, el resultado final será True 
+elem :: Eq a => a -> [a] -> Bool
+elem x = foldr(\y rec -> (y == x) || rec) False
+```
+```haskell
+-- La idea es ir agregando los elementos de xs uno a uno y cuando ya no queden elementos de xs, agregamos todo a ys. 
+(++) :: [a] -> [a] -> [a]
+(++) xs ys = foldr (\x rec -> x: rec) ys xs
+```
+```haskell
+-- La idea es ir aplicandole "f" a cada uno de los elementos de xs, cuando no queden elementos, le agregamos todos los "x modificados" a la []
+mapFoldr :: (a -> b) -> [a] -> [b]
+mapFoldr f = foldr (\x rec -> f x : rec) []
+```
+```haskell
+-- La idea es ir validando cada uno de los elementos de xs usando el predicado "p", si es True lo agrego, si no sigo con el siguiente elemento
+filterFoldr :: (a -> Bool) -> [a] -> [a]
+filterFoldr p = foldr(\x rec -> if p x then x:rec else rec) []
+```
+### II.
