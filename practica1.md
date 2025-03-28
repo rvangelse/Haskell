@@ -113,6 +113,21 @@ minimo :: [a] -> a
 minimo = mejorSegun (<)
 ```
 ### III.
+OJO: `foldl` al igual que `foldr` recorre la lista de `izquierda a derecha`, pero aplica la función que se le pasa de `forma inmediata`, `a la par` que itera la lista.
+No hace una evaluacion `lazy`, no construye un hilo recursivo.
+```haskell
+-- La idea es ir iterando la lista xs y concatenandole la suma del "último elemento del acumulador y x" al acumulador
+-- Al final, tendremos el problema de que el acumulador inicial "[0]", estara en la lista
+-- resultado, para eliminarlo usamos la función "tail"
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales = tail.foldl(\acc x -> acc ++ [last acc + x])[0]
+
+-- Otra opción menos elegante, pero más simple
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales  = foldl (\rec x -> (if null rec then x :rec else rec ++ [last rec + x])) []
+
+```
+### IV.
 
 
 
