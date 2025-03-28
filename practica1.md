@@ -125,9 +125,29 @@ sumasParciales = tail.foldl(\acc x -> acc ++ [last acc + x])[0]
 -- Otra opción menos elegante, pero más simple
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales  = foldl (\rec x -> (if null rec then x :rec else rec ++ [last rec + x])) []
-
 ```
 ### IV.
+```haskell
+-- La idea es aprovechar la evaluación "lazy" del foldr
+-- Asi, a medida que itero la lista, creo una cadena de restas recursivas
+-- Por ley de signos, las operaciones se irán alternando entre sumas y restas
+sumAlt :: Num a => [a] -> a
+sumaAlt = foldr(\x rec -> x - rec) 0
+```
+### V. 
+```haskell
+-- La idea es muy parecia a sumaAlt, 
+-- solo que usaremos foldl por su evaluación,
+-- esto hará que el orden de las operaciones empiece
+-- por el final de lista, como queremos
+sumaAltInversa :: Num a => [a] -> a
+sumaAltInversa = foldl (\acc x -> x - acc) 0
+```
+**Descripción de las ideas detrás de `sumaAlt` y `sumaAltInversa`**
+
+<p align="center">
+  <img src="grafico1.png" width="800">
+</p>
 
 
 
