@@ -63,7 +63,7 @@ uncurry f (a, b) = f a b
 OJO: `curryN`  no se puede definir, puedes definir curry2, curry3, curry4, etc. Pero, no curryN, ya que Haskell necesita saber `exactamente` el número de argumentos al tipar, debe ser estático, `no variable`.
 
 ## 3. 
-OJO: Algo que me ayuda a entender la recursión es pensar que la lista se itera de `izquierda a derecha`, a tráves de llamados recursivos que se `detienen` al llegar al caso base. Una vez eso pasa, el resultado recursivo `regresa del futuro` para que podamos usarlo.
+OJO: Algo que me ayuda a entender la recursión es pensar que la lista se itera de `izquierda a derecha`, a tráves de llamados recursivos que se `detienen` al llegar al caso base. Una vez eso pasa, el resultado recursivo `regresa del "futuro"` para que podamos usarlo.
 ### I.
 
 ```haskell
