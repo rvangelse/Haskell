@@ -63,35 +63,37 @@ uncurry f (a, b) = f a b
 OJO: `curryN`  no se puede definir, puedes definir curry2, curry3, curry4, etc. Pero, no curryN, ya que Haskell necesita saber `exactamente` el número de argumentos al tipar, debe ser estático, `no variable`.
 
 ## 3. 
+OJO: Algo que me ayuda a entender la recursión es pensar que la lista se itera de `izquierda a derecha`, a tráves de llamados recursivos que se `detienen` al llegar al caso base. Una vez eso pasa, el resultado recursivo `regresa del futuro` para que podamos usarlo.
 ### I.
 
 ```haskell
--- La idea es que se vayan sumando uno a los elementos desde la cabeza de la lista 
--- Y que cuando ya no queden elementos se sume 0 para cortar la recursión
+-- La idea es que se vayan sumando los elementos, recursivamente
+-- Y que cuando ya no queden elementos se sume 0 para obtener el resultado recursivo
 sum :: Num a => [a] -> a
 sum = foldr (+) 0
 ```
 ```haskell
--- La idea es ir comparando uno a uno los elementos de (y:ys) con x e ir construyendo una cadena de ORs
+-- La idea es ir comparando uno a uno los elementos de (y:ys) con x e ir construyendo una cadena de ORs, recursivamente.
 -- Si en algun momento se genera un True, el resultado final será True 
 elem :: Eq a => a -> [a] -> Bool
 elem x = foldr(\y rec -> (y == x) || rec) False
 ```
 ```haskell
--- La idea es ir agregando los elementos de xs uno a uno 
--- Y cuando ya no queden elementos de xs, agregamos todo a ys. 
+-- La idea es ir agregando los elementos de xs uno a uno, recursivamente
+-- Y cuando ya no queden elementos de xs, agregamos a ys, para obtener el resultado recursivo
 (++) :: [a] -> [a] -> [a]
 (++) xs ys = foldr (\x rec -> x: rec) ys xs
 ```
 ```haskell
--- La idea es ir aplicandole "f" a cada uno de los elementos de xs
--- Cuando no queden elementos, le agregamos todos los "x modificados" a la []
+-- La idea es ir aplicandole "f" a cada uno de los elementos de xs, recursivamente
+-- Cuando no queden elementos, agregamos la [] para obtener el resultado recursivo
 mapFoldr :: (a -> b) -> [a] -> [b]
 mapFoldr f = foldr (\x rec -> f x : rec) []
 ```
 ```haskell
--- La idea es ir validando cada uno de los elementos de xs usando el predicado "p"
--- Si es True lo agrego, si no sigo con el siguiente elemento
+-- La idea es ir validando cada uno de los elementos de xs usando el predicado "p", recursivamente
+-- Si es True lo agrego al resultado recursivo, si no sigo con el siguiente elemento
+-- Al quedarme sin elementos, agrego la [] y regreso el resultado recursivo
 filterFoldr :: (a -> Bool) -> [a] -> [a]
 filterFoldr p = foldr(\x rec -> if p x then x:rec else rec) []
 ```
@@ -100,6 +102,9 @@ filterFoldr p = foldr(\x rec -> if p x then x:rec else rec) []
 OJO: `foldr1` es un tipo especial de foldr, usa el  `último elemento` de la lista como `caso base`. No se puede aplicar sobre estructuras vacías.
 
 ```haskell
+-- La idea es ir validando los elementos de xs de a pares, usando "p"
+-- Si devuelve True me quedo con ese elemento, si no lo reemplazo 
+-- Al llegar al penúltimo elemento lo comparo con el final y regreso el resultado recursivo
 mejorSegun :: (a -> a -> Bool) -> [a] -> a
 mejorSegun p = foldr1 (\x rec -> if p x rec then x else rec)
 
@@ -108,6 +113,7 @@ minimo :: [a] -> a
 minimo = mejorSegun (<)
 ```
 ### III.
+
 
 
 
